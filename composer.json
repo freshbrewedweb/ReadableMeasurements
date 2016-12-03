@@ -1,0 +1,23 @@
+{
+    "name": "freshbrewedweb/readable-measurements",
+    "description": "PHP utility to extract measurements from human readable form.",
+    "keywords": ["convert", "measurements", "human readable", "utility", "helper"],
+    "homepage": "https://github.com/freshbrewedweb/ReadableMeasurements",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Greg Hunt",
+            "email": "freshbrewedweb@gmail.com",
+            "homepage": "https://freshbrewedweb.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "php": ">=5.6"
+    },
+    "autoload": {
+         "psr-4": {
+             "Freshbrewedweb\\ReadableMeasurements\\": "src/"
+         }
+     }
+}
