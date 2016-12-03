@@ -23,8 +23,10 @@ class ReadableMeasurements {
   protected $convertedValues = [];
 
   protected $units = [
+    //Watch out order matters. 
     'feet' => ["feet", 'ft', 'foot'],
     'meters' => ['meter', 'm'],
+    'centimeters' => ['centimeters', 'cm'],
     'inches' => ['inches', 'in'],
   ];
 
