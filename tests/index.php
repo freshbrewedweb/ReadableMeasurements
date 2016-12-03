@@ -11,6 +11,7 @@ try {
 } catch( Exception $e ) {
   $error = $e->getMessage();
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,6 +31,8 @@ try {
         color: #333;
         text-align: left;
         padding: 1em;
+        margin: 1em;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.5);
       }
     </style>
   </head>
@@ -39,11 +42,12 @@ try {
         <input type="text" name="string" value="<?= $measurement->original() ?>" style="flex: 1 0 auto">
         <button type="submit" style="flex: 1 0 auto">Convert</button>
       </div>
-      <pre>
+
       <?php if( isset($error) ): ?>
-        <?php print_r( $error ) ?>
+        <pre><?php print_r( $error ) ?></pre>
       <?php else: ?>
-        <?php print_r( $measurement->get() ) ?>
+        <pre><?php print_r( $measurement->get() ) ?></pre>
+        <pre><?php var_dump( $measurement ) ?></pre>
       <?php endif; ?>
     </pre>
     </form>

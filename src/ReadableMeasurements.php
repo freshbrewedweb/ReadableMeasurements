@@ -15,29 +15,59 @@ function dump( $var ) {
 class ReadableMeasurements {
 
   protected $original;
-  protected $converted;
-  protected $matches;
+  protected $string;
+  protected $unit;
+
+  protected $units = [
+    'feet' => ['ft', 'foot', "'", '"'],
+    'meters' => ['meter', 'm'],
+  ];
 
   public function __construct( $string )
   {
-    $this->original = $this->sanitize($string);
+    $this->original = $string;
+    $this->string = $this->sanitize( $string );
+    $this->setUnit();
   }
 
   /**
    * Private Methods
    */
-  private function sanitize($words)
+  private function sanitize( $string )
   {
-    return implode('', $words);
+    return $string;
   }
 
+  private function setUnit()
+  {
+    foreach( $this->units as $unit => $syns ) {
+      foreach( $syns as $syn ) {
+        if( $this->strContains( $syn, $this->string ) ) {
+          $this->unit = $unit;
+        }
+      }
+    }
+
+    return $this;
+  }
+
+  private function strContains( $needle, $haystack )
+  {
+    if( strpos($haystack, $needle) !== false )
+      return true;
+  }
 
   /**
    * Public API
    */
   public function get()
   {
-    return $this;
+    return $this->original;
+  }
+
+  public function original()
+  {
+    return $this->original;
   }
 
 }
