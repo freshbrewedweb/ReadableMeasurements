@@ -2,6 +2,8 @@
 
 namespace Freshbrewedweb\ReadableMeasurements;
 
+use PhpUnitsOfMeasure\PhysicalQuantity\Length;
+
 function dd( $var ){
   dump($var);
   die();
@@ -17,10 +19,13 @@ class ReadableMeasurements {
   protected $original;
   protected $string;
   protected $unit;
+  protected $values = [];
+  protected $convertedValues = [];
 
   protected $units = [
-    'feet' => ['ft', 'foot', "'", '"'],
+    'feet' => ["feet", 'ft', 'foot'],
     'meters' => ['meter', 'm'],
+    'inches' => ['inches', 'in'],
   ];
 
   public function __construct( $string )
@@ -28,6 +33,7 @@ class ReadableMeasurements {
     $this->original = $string;
     $this->string = $this->sanitize( $string );
     $this->setUnit();
+    $this->setValues();
   }
 
   /**
@@ -37,6 +43,7 @@ class ReadableMeasurements {
   {
     return $string;
   }
+
 
   private function setUnit()
   {
@@ -57,6 +64,17 @@ class ReadableMeasurements {
       return true;
   }
 
+  private function extractNumbers()
+  {
+    preg_match_all('/[0-9]*\.?[0-9]+/', $this->string, $matches);
+    return $matches[0];
+  }
+
+  private function setValues()
+  {
+      $this->values = array_merge($this->values, $this->extractNumbers());
+  }
+
   /**
    * Public API
    */
@@ -68,6 +86,23 @@ class ReadableMeasurements {
   public function original()
   {
     return $this->original;
+  }
+
+  public function convertTo( $unit )
+  {
+    $this->convertedValues = array_map(function($value) use ($unit){
+      $measurement = new Length($value, $this->unit);
+      return $measurement->toUnit($unit);
+    }, $this->values);
+
+    return $this;
+  }
+
+  public function values() {
+    if( !empty($this->convertedValues) )
+      return $this->convertedValues;
+    else
+      $this->values;
   }
 
 }
