@@ -12,6 +12,16 @@ try {
   $error = $e->getMessage();
 }
 
+/**
+ * @filename: currentgitbranch.php
+ * @usage: Include this file after the '<body>' tag in your project
+ * @author Kevin Ridgway
+ */
+$repoName = "ReadableMeasurements";
+$repo = json_decode(file_get_contents("https://api.github.com/repos/freshbrewedweb/$repoName"));
+
+$git = "<div style='clear: both; width: 100%; font-size: 14px; font-family: Helvetica; color: #30121d; background: #bcbf77; padding: 20px; text-align: center;'>Origin: <span style='color:#fff; font-weight: bold; text-transform: uppercase;'>" . $repo->html_url . "</span></div>"; //show it on the page
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,6 +47,7 @@ try {
     </style>
   </head>
   <body>
+    <div><?= $git ?></div>
     <form style="width:90%; max-width:600px;margin:3em auto;">
       <div style="display:flex;">
         <input type="text" name="string" value="<?= $measurement->original() ?>" style="flex: 1 0 auto">
