@@ -72,7 +72,7 @@ try {
 
       <?php if( isset($error) ): ?>
         <pre><?php print_r( $error ) ?></pre>
-      <?php else: ?>
+      <?php elseif( $string ): ?>
         <pre><?php
             foreach( $measurement->convertTo($unit)->values() as $value ) {
               echo $value . $unit . "\n";
